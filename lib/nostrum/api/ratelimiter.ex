@@ -100,7 +100,7 @@ defmodule Nostrum.Api.Ratelimiter do
     open_opts = %{retry: @reconnect_attempts, tls_opts: Constants.gun_tls_opts()}
     {:ok, conn_pid} = :gun.open(domain, 443, open_opts)
 
-    {:ok, :http2} = :gun.await_up(conn_pid)
+    {:ok, _} = :gun.await_up(conn_pid)
 
     # Start the old route cleanup loop
     Process.send_after(self(), :remove_old_buckets, @bucket_cleanup_interval)
